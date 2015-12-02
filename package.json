@@ -1,0 +1,29 @@
+{
+  "name": "cci-pingu",
+  "version": "0.1.0",
+  "description": "Periodically checks for new builds (artifacts) on CircleCI and installs them in turn.",
+  "license": "MIT",
+  "author": "Roman Kaspar <roman@salsitasoft.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salsita/cci-pingu"
+  },
+  "engines": {
+    "node": ">=4.2.1"
+  },
+  "scripts": {
+    "postinstall": "npm run build",
+    "start": "node dist/cci-pingu.js config/default.json",
+    "test": "npm run lint && ./node_modules/.bin/mocha --colors --recursive --reporter list dist/**/*.spec.js",
+    "build": "./node_modules/.bin/babel code --out-dir dist --source-maps inline",
+    "lint": "./node_modules/.bin/eslint code"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.2.0",
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.1.18",
+    "eslint": "^1.10.2",
+    "eslint-plugin-import": "^0.11.0",
+    "mocha": "^2.3.4"
+  }
+}
