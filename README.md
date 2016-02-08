@@ -1,7 +1,6 @@
-# CCI Pingu
+# cci-pingu
 
-Periodically checks for new builds (artifacts) on CircleCI and installs them in
-turn.
+Periodically checks for new builds (artifacts) on CircleCI and installs them in turn.
 
 ## Installation
 
