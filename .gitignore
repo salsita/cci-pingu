@@ -3,3 +3,4 @@ node_modules
 dist
 cci-pingu.tgz
 code/lib/version.js
+config/default.json
