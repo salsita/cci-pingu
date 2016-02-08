@@ -17,7 +17,7 @@
     "lint": "./node_modules/.bin/eslint code",
     "test": "./node_modules/.bin/mocha --colors --recursive --reporter list dist/**/*.spec.js",
     "build": "npm run gen-ver && npm run lint && rm -rf dist && mkdir dist && ./node_modules/.bin/babel code --out-dir dist --source-maps inline && npm run test",
-    "build-pkg": "npm run build && cp package.json dist && cd dist && mkdir config && npm install --production && rm package.json && find . -name \"*.spec.js\" -exec rm \\{\\} \\; && COPYFILE_DISABLE=1 tar cfz ../cci-pingu.tgz *"
+    "build-pkg": "npm run build && cp package.json dist && cp -r config dist && rm dist/config/default.json && cd dist && npm install --production && rm package.json && find . -name \"*.spec.js\" -exec rm \\{\\} \\; && COPYFILE_DISABLE=1 tar cfz ../cci-pingu.tgz *"
   },
   "devDependencies": {
     "babel-cli": "^6.2.0",
