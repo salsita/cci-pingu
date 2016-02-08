@@ -1,6 +1,6 @@
 {
   "name": "cci-pingu",
-  "version": "0.1.0",
+  "version": "1.2.0",
   "description": "Periodically checks for new builds (artifacts) on CircleCI and installs them in turn.",
   "license": "MIT",
   "author": "Roman Kaspar <roman@salsitasoft.com>",
@@ -12,18 +12,24 @@
     "node": ">=4.2.1"
   },
   "scripts": {
-    "postinstall": "npm run build",
-    "start": "node dist/cci-pingu.js config/default.json",
-    "test": "npm run lint && ./node_modules/.bin/mocha --colors --recursive --reporter list dist/**/*.spec.js",
-    "build": "./node_modules/.bin/babel code --out-dir dist --source-maps inline",
-    "lint": "./node_modules/.bin/eslint code"
+    "gen-ver": "printf \"// generated code, please see package.json\nexport default '%s';\n\" ${npm_package_version} > code/lib/version.js",
+    "start": "node dist/cci-pingu.js --config=config/default.json --debug",
+    "lint": "./node_modules/.bin/eslint code",
+    "test": "./node_modules/.bin/mocha --colors --recursive --reporter list dist/**/*.spec.js",
+    "build": "npm run gen-ver && npm run lint && rm -rf dist && mkdir dist && ./node_modules/.bin/babel code --out-dir dist --source-maps inline && npm run test",
+    "build-pkg": "npm run build && cp package.json dist && cd dist && mkdir config && npm install --production && rm package.json && find . -name \"*.spec.js\" -exec rm \\{\\} \\; && COPYFILE_DISABLE=1 tar cfz ../cci-pingu.tgz *"
   },
   "devDependencies": {
     "babel-cli": "^6.2.0",
     "babel-eslint": "^4.1.6",
     "babel-preset-es2015": "^6.1.18",
+    "babel-preset-stage-0": "^6.3.13",
     "eslint": "^1.10.2",
     "eslint-plugin-import": "^0.11.0",
     "mocha": "^2.3.4"
+  },
+  "dependencies": {
+    "argv": "0.0.2",
+    "superagent": "^1.5.0"
   }
 }
