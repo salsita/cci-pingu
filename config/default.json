@@ -1,9 +1,6 @@
 {
-    "organisation": "TODO: your organisation",
-    "interval": 60,
-    "directory": "/tmp",
-    "timeout": 300,
     "token": "TODO: your CCI API token",
+    "organisation": "TODO: your organisation",
     "project": "TODO: your project",
     "branch": "TODO: your branch",
     "artifacts": [

@@ -28,7 +28,7 @@ const module = {
       process.exit(1);
     }
     // validate
-    const mandatory = ['token', 'project', 'branch', 'artifacts', 'script'];
+    const mandatory = ['token', 'organisation', 'project', 'branch', 'artifacts', 'script'];
     mandatory.forEach((field) => {
       if (!(field in obj)) {
         console.error('Invalid configuration file "' + cfgFilename + '".');
@@ -39,11 +39,10 @@ const module = {
     });
     // extend with defaults
     const defaults = {
-      organisation: 'salsita',  // CCI user name
       interval: 60,             // polling interval, in seconds
       directory: '/tmp',        // where to store artifacts
       last: 0,                  // last installed build number
-      timeout: 60               // request / download timeout (per single request / artifact)
+      timeout: 45               // request / download timeout (per single request / artifact)
     };
     const res = { ...defaults, ...obj };
     console.log('Configuration object:\n' + JSON.stringify(res, null, 4));
