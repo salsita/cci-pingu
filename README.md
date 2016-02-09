@@ -59,6 +59,10 @@ When all of the artifacts are downloaded into that directory, the tool starts ex
 
 It might be a good idea to delete the directories from previous installations, and leave the last *N* artifact directories there, to keep the disk space occupied with these directories limited.
 
+```
+(ls -td build-* | head -n 5; ls -d build-*) | sort | uniq -u | xargs rm -rf
+```
+
 In case the return value of the installation script is 0, the installation is considered successful (in which case the `last` field of the configuration file is updated), otherwise it is considered failed.
 
 In continuous mode (the default operation mode) the tool waits `interval` seconds and starts the check / installation again. If started with `--run-once` or when the CircleCI build number is passed explicitly on command line, then cci-pingu terminates.
@@ -76,3 +80,35 @@ In continuous mode (the default operation mode) the tool waits `interval` second
 | `--install` | `-i` | | integer | Install given build (overrides the `branch` setting from configuration file). Implies `--run-once` command line option. |
 
 All logs go to `stdout`, feel free to redirect as needed.
+
+## `package.json` npm scripts
+
+```
+> npm run build
+```
+Generate version file, lint the ES6 source code, transpile the ES6 source code into `dist` directory (using babel with `.babelrc` as the configuration file) and verify the (transpiled) tests pass on the (transpiled) code.
+
+```
+> npm run gen-ver
+```
+Generate `code/lib/version.js` file exporting the current version of the tool, as taken from `package.json` itself. Used as part of the `build` script.
+
+```
+> npm run lint
+```
+Lint the (ES6) source code, uses `.eslintrc` as the configuration file. Used as part of the `build` script.
+
+```
+> npm run test
+```
+Verify the (transpiled) tests pass on the (traspiled) code. Used as part of the `build` script.
+
+```
+> npm start
+```
+Start the tool in tool with `config/default.json` configuration file in debug mode. Note: the tool must be built first (so you need to run `npm run build` prior to `npm start`). Also, the `default.json` file needs to be updated with project-related information and CCI API token before starting the tool.
+
+```
+> npm run build-pkg
+```
+Build the tool as in `npm run build`, install run-time `node_modules` to `dist` directory, copy over the configuration files (except for `default.json`), remove unnecessary files (test specs) and package the `dist` directory as a tarball.
