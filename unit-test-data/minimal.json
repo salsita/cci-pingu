@@ -1,0 +1,8 @@
+{
+  "token": "token",
+  "organisation": "organisation",
+  "project": "project",
+  "branch": "branch",
+  "artifacts": "artifacts",
+  "script": "script"
+}

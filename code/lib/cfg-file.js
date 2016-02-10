@@ -5,36 +5,52 @@ import fs from 'fs';
 let cfgFilename = '';
 
 const module = {
+  // for unit tests
+  _verbose: true,
+  _mute: () => { module._verbose = false; },
+  // module functions
   setFilename: (filename) => { cfgFilename = filename; return module; },
   read: () => {
-    console.log('Reading configuration file "' + cfgFilename + '".');
+    module._verbose && console.log('Reading configuration file "' + cfgFilename + '".');
     let text;
     let obj;
     // read
     try {
       text = fs.readFileSync(cfgFilename);
     } catch (e) {
-      console.error('Cannot read configuration file "' + cfgFilename + '".');
-      console.error('Aborting.');
-      process.exit(1);
+      if (module._verbose) {
+        console.error('Cannot read configuration file "' + cfgFilename + '".');
+        console.error('Aborting.');
+        process.exit(1);
+      } else {
+        throw new Error('cannot read file');
+      }
     }
     // parse
     try {
       obj = JSON.parse(text);
     } catch (e) {
-      console.error('Cannot parse configuration file "' + cfgFilename + '".');
-      console.error('Message: ' + e.message);
-      console.error('Aborting.');
-      process.exit(1);
+      if (module._verbose) {
+        console.error('Cannot parse configuration file "' + cfgFilename + '".');
+        console.error('Message: ' + e.message);
+        console.error('Aborting.');
+        process.exit(1);
+      } else {
+        throw new Error('cannot parse file');
+      }
     }
     // validate
     const mandatory = ['token', 'organisation', 'project', 'branch', 'artifacts', 'script'];
     mandatory.forEach((field) => {
       if (!(field in obj)) {
-        console.error('Invalid configuration file "' + cfgFilename + '".');
-        console.error('Mandatory field "' + field + '" is missing.');
-        console.error('Aborting.');
-        process.exit(1);
+        if (module._verbose) {
+          console.error('Invalid configuration file "' + cfgFilename + '".');
+          console.error('Mandatory field "' + field + '" is missing.');
+          console.error('Aborting.');
+          process.exit(1);
+        } else {
+          throw new Error('missing mandatory field');
+        }
       }
     });
     // extend with defaults
@@ -45,21 +61,23 @@ const module = {
       timeout: 45               // request / download timeout (per single request / artifact)
     };
     const res = { ...defaults, ...obj };
-    console.log('Configuration object:\n' + JSON.stringify(res, null, 4));
+    module._verbose && console.log('Configuration object:\n' + JSON.stringify(res, null, 4));
     return res;
   },
   write: (config) => {
-    console.log('Writing configuration file "' + cfgFilename + '".');
+    module._verbose && console.log('Writing configuration file "' + cfgFilename + '".');
     const newConf = {};
     for (const key in config) { if (key[0] !== '_') { newConf[key] = config[key]; } }
     const data = JSON.stringify(newConf, null, 4);
-    console.log('New configuration data:\n' + data);
+    module._verbose && console.log('New configuration data:\n' + data);
     try {
       fs.writeFileSync(cfgFilename, data + '\n');
       return true;
     } catch (e) {
-      console.error('Failed to write new config to "' + cfgFilename + '".');
-      console.error('Reason: ' + e.message);
+      if (module._verbose) {
+        console.error('Failed to write new config to "' + cfgFilename + '".');
+        console.error('Reason: ' + e.message);
+      }
       return false;
     }
   }
