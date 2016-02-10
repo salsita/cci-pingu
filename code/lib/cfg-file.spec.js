@@ -70,11 +70,11 @@ describe('Config file module', () => {
   });
 
   it('# should not write config file', () => {
-    // try {
-      assert.equal(cfgFile.setName('/this/directory/does/not/exist').write({}), false);
-    // } catch (e) {
-      // assert.fail();
-    // }
+    try {
+      assert.equal(cfgFile.setFilename('/this/directory/does/not/exist').write({}), false);
+    } catch (e) {
+      assert.fail();
+    }
   });
 
   it('# should write config file and ignore private keys', () => {
