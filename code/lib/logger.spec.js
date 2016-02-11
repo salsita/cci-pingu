@@ -8,7 +8,7 @@ const myDate = () => {
   return {
     getFullYear: () => 2015,
     getMonth: () => 0,
-    getDay: () => 2,
+    getDate: () => 2,
     getHours: () => 3,
     getMinutes: () => 4,
     getSeconds: () => 5,
@@ -27,88 +27,128 @@ const myConsole = {
 logger._inject(myConsole, myDate);
 beforeEach(() => { log = []; });
 
+const testConsoleFns = () => {
+  myConsole.log('LOG text');
+  myConsole.info('INFO text');
+  myConsole.warn('WARN text');
+  myConsole.error('ERROR text');
+};
+
+const verifyResults = (expected) => {
+  assert.equal(log.length, expected.length);
+  expected.forEach((expItem, i) => {
+    const logItem = log[i];
+    assert.equal(expItem.name, logItem.name);
+    const args = logItem.args;
+    assert.equal(expItem.args.length, args.length);
+    expItem.args.forEach((argItem, j) => {
+      assert.deepEqual(argItem, args[j]);
+    });
+  });
+};
+
 describe('Logger module', () => {
   it('# should use standard console when logger is not installed', () => {
-    myConsole.log('LOG text');
-    myConsole.info('INFO text');
-    myConsole.warn('WARN text');
-    myConsole.error('ERROR text');
-    assert.equal(log.length, 4);
-    let name;
-    let args;
-    name = log[0].name;
-    args = log[0].args;
-    assert.equal(name, 'log');
-    assert.equal(args, 'LOG text');
-    name = log[1].name;
-    args = log[1].args;
-    assert.equal(name, 'info');
-    assert.equal(args, 'INFO text');
-    name = log[2].name;
-    args = log[2].args;
-    assert.equal(name, 'warn');
-    assert.equal(args, 'WARN text');
-    name = log[3].name;
-    args = log[3].args;
-    assert.equal(name, 'error');
-    assert.equal(args, 'ERROR text');
+    testConsoleFns();
+    verifyResults([
+      { name: 'log',   args: [ 'LOG text' ] },
+      { name: 'info',  args: [ 'INFO text' ] },
+      { name: 'warn',  args: [ 'WARN text' ] },
+      { name: 'error', args: [ 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should use logger formatting when logger is installed, log info and above', () => {
+    assert.equal(logger.install(), true);
+    testConsoleFns();
+    verifyResults([
+      { name: 'info',  args: [ '[2015/01/02 03:04:05.006]  INFO:', 'INFO text' ] },
+      { name: 'warn',  args: [ '[2015/01/02 03:04:05.006]  WARN:', 'WARN text' ] },
+      { name: 'error', args: [ '[2015/01/02 03:04:05.006] ERROR:', 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should ignore subsequent install() invocations', () => {
+    assert.equal(logger.install(), false);
+    testConsoleFns();
+    verifyResults([
+      { name: 'info',  args: [ '[2015/01/02 03:04:05.006]  INFO:', 'INFO text' ] },
+      { name: 'warn',  args: [ '[2015/01/02 03:04:05.006]  WARN:', 'WARN text' ] },
+      { name: 'error', args: [ '[2015/01/02 03:04:05.006] ERROR:', 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should restore original console functions on uninstall', () => {
+    assert.equal(logger.uninstall(), true);
+    testConsoleFns();
+    verifyResults([
+      { name: 'log',   args: [ 'LOG text' ] },
+      { name: 'info',  args: [ 'INFO text' ] },
+      { name: 'warn',  args: [ 'WARN text' ] },
+      { name: 'error', args: [ 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should ignore subsequent uninstall() invocations', () => {
+    assert.equal(logger.uninstall(), false);
+    testConsoleFns();
+    verifyResults([
+      { name: 'log',   args: [ 'LOG text' ] },
+      { name: 'info',  args: [ 'INFO text' ] },
+      { name: 'warn',  args: [ 'WARN text' ] },
+      { name: 'error', args: [ 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should use provided log level and application name in log messages', () => {
+    assert.equal(logger.install('log', 'APP NAME'), true);
+    testConsoleFns();
+    verifyResults([
+      { name: 'log',   args: [ '[2015/01/02 03:04:05.006 - APP NAME]   LOG:', 'LOG text' ] },
+      { name: 'info',  args: [ '[2015/01/02 03:04:05.006 - APP NAME]  INFO:', 'INFO text' ] },
+      { name: 'warn',  args: [ '[2015/01/02 03:04:05.006 - APP NAME]  WARN:', 'WARN text' ] },
+      { name: 'error', args: [ '[2015/01/02 03:04:05.006 - APP NAME] ERROR:', 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should return application name and log level currently set', () => {
+    assert.equal(logger.name(), 'APP NAME');
+    assert.equal(logger.level(), 'log');
+  });
+
+  it('# should set new log level', () => {
+    assert.equal(logger.level('warn'), 'warn');
+    testConsoleFns();
+    verifyResults([
+      { name: 'warn',  args: [ '[2015/01/02 03:04:05.006 - APP NAME]  WARN:', 'WARN text' ] },
+      { name: 'error', args: [ '[2015/01/02 03:04:05.006 - APP NAME] ERROR:', 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should ignore unknown log level', () => {
+    assert.equal(logger.level('unknown'), false);
+    testConsoleFns();
+    verifyResults([
+      { name: 'warn',  args: [ '[2015/01/02 03:04:05.006 - APP NAME]  WARN:', 'WARN text' ] },
+      { name: 'error', args: [ '[2015/01/02 03:04:05.006 - APP NAME] ERROR:', 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should set new application name', () => {
+    assert.equal(logger.name('NEW NAME'), 'NEW NAME');
+    testConsoleFns();
+    verifyResults([
+      { name: 'warn',  args: [ '[2015/01/02 03:04:05.006 - NEW NAME]  WARN:', 'WARN text' ] },
+      { name: 'error', args: [ '[2015/01/02 03:04:05.006 - NEW NAME] ERROR:', 'ERROR text' ] }
+    ]);
+  });
+
+  it('# should reset application name', () => {
+    assert.equal(logger.name(''), '');
+    testConsoleFns();
+    verifyResults([
+      { name: 'warn',  args: [ '[2015/01/02 03:04:05.006]  WARN:', 'WARN text' ] },
+      { name: 'error', args: [ '[2015/01/02 03:04:05.006] ERROR:', 'ERROR text' ] }
+    ]);
   });
 });
-
-/*
-
-logger.install();
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-
-logger.install();
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-
-logger.uninstall();
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-
-logger.uninstall();
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-
-logger.install('log', 'my cool app name');
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-
-logger.uninstall();
-logger.install('warn');
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-
-logger.uninstall();
-logger.install();
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-logger.name('app name');
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-logger.level('warn');
-console.log('LOG text');
-console.info('INFO text');
-console.warn('WARN text');
-console.error('ERROR text');
-
-*/

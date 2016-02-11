@@ -118,7 +118,7 @@ export default {
 
   // set / get level
   level: (value = null) => {
-    if (!value) { return fnNames[fnNames.legth - state.level]; }
+    if (!value) { return fnNames[fnNames.length - state.level]; }
     if (!(value in levels)) { return false; }
     state.level = levels[value];
     return value;
