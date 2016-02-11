@@ -29,8 +29,9 @@
 //       - name: any string
 //       If value is not provided, current application name is returned.
 
-// need to be able to inject different console object for unit tests...
+// need to be able to inject different console / Date object for unit tests...
 let _console = console;
+let _Date = Date;
 
 const levels = {
   log: 4,
@@ -63,7 +64,7 @@ const logNames = fnNames.map( (name) => pad(name, 5, ' ').toUpperCase() );
 
 // return string that will be prepended before logged message
 function getPrefix() {
-  const d = new Date();
+  const d = new _Date();
   const res =
     d.getFullYear() + '/' +
     pad(d.getMonth() + 1) + '/' +
@@ -131,8 +132,9 @@ export default {
   },
 
   // injector for unit tests
-  _inject: obj => {
-    _console = obj;
+  _inject: (c, D) => {
+    _console = c;
+    _Date = D;
   }
 
 };
