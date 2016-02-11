@@ -74,10 +74,10 @@ In continuous mode (the default operation mode) the tool waits `interval` second
 | `--config` | `-c` | * | string | Path to configuration JSON file. |
 | `--debug` | `-d` | | boolean | Log verbosely. |
 | `--silent` | `-s` | | boolean | Log errors only. |
-| `--run-once` | `-1` | | boolean | Do NOT run as a monitoring daemon, exit after one CicrleCI check. |
+| `--run-once` | `-1` | | boolean | Do NOT run as a monitoring daemon. |
 | `--help` | `-h` | | boolean | Print help and exit. |
 | `--version` | `-v` | | boolean | Print version and exit. |
-| `--install` | `-i` | | integer | Install given build (overrides the `branch` setting from configuration file). Implies `--run-once` command line option. |
+| `--install` | `-i` | | integer | Install given build (ignore cfg `branch`). |
 
 All logs go to `stdout`, feel free to redirect as needed.
 
