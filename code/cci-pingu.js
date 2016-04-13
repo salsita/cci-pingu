@@ -12,7 +12,7 @@ console.info('CCI-PINGU started.');
 console.log('Command line options:\n' + JSON.stringify(options, null, 4));
 
 const sigHandler = () => {
-  console.info('SIGINT / SIGTERM received, CCI-PINGU terminating. See you next time!');
+  console.info('SIGINT / SIGTERM received, CCI-PINGU terminating. Thanks for flying with us!');
   process.exit(0);
 };
 process.on('SIGINT', sigHandler);

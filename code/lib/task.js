@@ -23,7 +23,7 @@ const scheduleNext = () => {
     }
   }
   if (options['run-once']) {
-    console.info('CCI-PINGU about to exit successfully. See you next time!');
+    console.info('CCI-PINGU about to exit. Thanks for flying with us!');
   } else {
     setTimeout(module.run, config.interval * 1000);
     console.info('Next CCI task scheduled in ' + config.interval + ' seconds.');
