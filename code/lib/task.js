@@ -14,6 +14,7 @@ let options; // set once at first run()
 let config;  // re-read in each iteration
 let downloadError; // stop the process in case download failed
 
+let EXIT_CODE; // return code for '--run-once' mode
 
 const scheduleNext = () => {
   if (config._save) {
@@ -24,6 +25,7 @@ const scheduleNext = () => {
   }
   if (options['run-once']) {
     console.info('CCI-PINGU about to exit. Thanks for flying with us!');
+    process.exit(EXIT_CODE);
   } else {
     setTimeout(module.run, config.interval * 1000);
     console.info('Next CCI task scheduled in ' + config.interval + ' seconds.');
@@ -50,6 +52,7 @@ const startScript = () => {
       } else { // fail
         console.error('Installation script failed with exit code (' + code + ').');
       }
+      EXIT_CODE = code;
       scheduleNext();
     });
   } catch (e) { // spawn can throw exceptions on its own
@@ -196,6 +199,7 @@ const cciBuildInfoHandler = (err, res) => {
     if (config.last === config._last) {
       console.info('Build ' + config._last + ' already installed.');
       console.info('CCI task successfully finished.');
+      EXIT_CODE = 0;
       scheduleNext();
     } else {
       console.info('Build ' + config._last + ' is not installed yet.');
@@ -213,6 +217,7 @@ const cciBuildInfoHandler = (err, res) => {
 };
 
 module.run = (_options = null) => {
+  EXIT_CODE = 1;   // update to 0 on final success
   if (_options) { options = _options; }
   config = options.cfgFile.read();
   config._name = [config.organisation, config.project, config.branch].join('/');
