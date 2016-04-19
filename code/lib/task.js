@@ -188,6 +188,10 @@ const cciBuildInfoHandler = (err, res) => {
     console.error('Status: ' + res.status + ', ' + res.text);
     console.warn('CCI task finished with failure.');
     scheduleNext();
+  } if (!res.body.length) {
+    console.error('No successful build found for given branch!');
+    console.warn('CCI task finished with failure.');
+    scheduleNext();
   } else { // res.ok
     if (options.install) {
       config._last = options.install;
