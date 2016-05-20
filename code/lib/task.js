@@ -188,18 +188,14 @@ const cciBuildInfoHandler = (err, res) => {
     console.error('Status: ' + res.status + ', ' + res.text);
     console.warn('CCI task finished with failure.');
     scheduleNext();
-  } if (!res.body.length) {
+  } else if (!res.body || !res.body.length) {
     console.error('No successful build found for given branch!');
     console.warn('CCI task finished with failure.');
     scheduleNext();
   } else { // res.ok
-    if (options.install) {
-      config._last = options.install;
-    } else {
-      console.log('Response from CCI server:\n' + JSON.stringify(res.body, null, 4));
-      config._last = res.body[0].build_num;
-      console.info('Last successful ' + config._name + ' build number: ' + config._last + '.');
-    }
+    !options.install && console.log('Response from CCI server:\n' + JSON.stringify(res.body, null, 4));
+    config._last = res.body[0].build_num;
+    !options.install && console.info('Last successful ' + config._name + ' build number: ' + config._last + '.');
     if (config.last === config._last) {
       console.info('Build ' + config._last + ' already installed.');
       console.info('CCI task successfully finished.');
@@ -226,7 +222,13 @@ module.run = (_options = null) => {
   config = options.cfgFile.read();
   config._name = [config.organisation, config.project, config.branch].join('/');
   console.info('CCI task started.');
-  if (options.install) { cciBuildInfoHandler(null, { ok: true }); return; }
+  if (options.install) {
+    cciBuildInfoHandler(null, {
+      ok: true,
+      body: [ { build_num: options.install } ]
+    });
+    return;
+  }
   const apiPath = ['/api/v1/project', config.organisation, config.project, 'tree', config.branch].join('/');
   console.log('Getting info about last successful build of ' + config._name + '.');
   request
