@@ -40,7 +40,7 @@ const module = {
       }
     }
     // validate
-    const mandatory = ['token', 'organisation', 'project', 'branch', 'artifacts', 'script'];
+    const mandatory = ['token', 'hosting', 'organisation', 'project', 'branch', 'artifacts', 'script'];
     mandatory.forEach((field) => {
       if (!(field in obj)) {
         if (module._verbose) {

@@ -1,5 +1,6 @@
 {
   "token": "token",
+  "hosting": "hosting",
   "organisation": "organisation",
   "project": "project",
   "branch": "branch",

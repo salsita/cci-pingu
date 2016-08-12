@@ -29,7 +29,8 @@ Config file is a JSON file with configuration object. The keys there have the fo
 | Name | Mandatory | Type | Default | Meaning |
 | ---- |:---------:|:----:|:-------:| ------- |
 | token | * | string | | Your CircleCI API token that will be used when talking to CircleCI. Make sure you can access your project with this token. |
-| organisation | * | string | | The name of your github organisation (or user) under which the monitored project lives on CircleCI. |
+| hosting | * | string | | "github" or "bitbucket"; where you repo is hosted. |
+| organisation | * | string | | The name of your github / bitbucket organisation (or user) under which the monitored project lives on CircleCI. |
 | project | * | string | | The name of the project you'd like to watch and install locally. |
 | branch | * | string| | The project repository branch to monitor. |
 | artifacts | * | array of strings | | List of artifact names that will be downloaded for successful build. Actually, it is list of artifact name *prefixes* so that you can have "test" string in the `artifacts` array and it would match "test-1.2.3.tgz" artifact on CircleCI. |

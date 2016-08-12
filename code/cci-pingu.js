@@ -2,13 +2,14 @@ import logger from './lib/logger';
 import cmdline from './lib/cmdline';
 import cfgFile from './lib/cfg-file';
 import task from './lib/task';
+import version from './lib/version';
 
 logger.install();
 const options = cmdline.options;
 if (options.silent) { logger.level('error'); }
 if (options.debug)  { logger.level('log'); }
 
-console.info('CCI-PINGU started.');
+console.info(`CCI-PINGU started (version:${version})`);
 console.log('Command line options:\n' + JSON.stringify(options, null, 4));
 
 const sigHandler = () => {

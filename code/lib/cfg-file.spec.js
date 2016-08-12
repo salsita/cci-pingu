@@ -36,6 +36,7 @@ describe('Config file module', () => {
       const data = cfgFile.setFilename('unit-test-data/minimal.json').read();
       assert.equal(typeof data, 'object');
       assert.equal(data.token, 'token');
+      assert.equal(data.hosting, 'hosting');
       assert.equal(data.organisation, 'organisation');
       assert.equal(data.project, 'project');
       assert.equal(data.branch, 'branch');
@@ -55,6 +56,7 @@ describe('Config file module', () => {
       const data = cfgFile.setFilename('unit-test-data/full.json').read();
       assert.equal(typeof data, 'object');
       assert.equal(data.token, 'token');
+      assert.equal(data.hosting, 'hosting');
       assert.equal(data.organisation, 'organisation');
       assert.equal(data.project, 'project');
       assert.equal(data.branch, 'branch');

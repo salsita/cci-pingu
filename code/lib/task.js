@@ -203,8 +203,8 @@ const cciBuildInfoHandler = (err, res) => {
       scheduleNext();
     } else {
       console.info('Build ' + config._last + ' is not installed yet.');
-      const apiPath = ['/api/v1/project', config.organisation, config.project,
-                    config._last, 'artifacts']. join('/');
+      const apiPath = ['/api/v1.1/project', config.hosting, config.organisation,
+                      config.project, config._last, 'artifacts']. join('/');
       console.log('Getting info about build ' + config._last + ' artifacts.');
       request
         .get('https://circleci.com' + apiPath)
@@ -220,7 +220,7 @@ module.run = (_options = null) => {
   EXIT_CODE = 1;   // update to 0 on final success
   if (_options) { options = _options; }
   config = options.cfgFile.read();
-  config._name = [config.organisation, config.project, config.branch].join('/');
+  config._name = [config.hosting, config.organisation, config.project, config.branch].join('/');
   console.info('CCI task started.');
   if (options.install) {
     cciBuildInfoHandler(null, {
@@ -229,7 +229,7 @@ module.run = (_options = null) => {
     });
     return;
   }
-  const apiPath = ['/api/v1/project', config.organisation, config.project, 'tree', config.branch].join('/');
+  const apiPath = ['/api/v1.1/project', config.hosting, config.organisation, config.project, 'tree', config.branch].join('/');
   console.log('Getting info about last successful build of ' + config._name + '.');
   request
     .get('https://circleci.com' + apiPath)
