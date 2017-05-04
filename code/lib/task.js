@@ -151,12 +151,15 @@ const cciArtifactsInfoHandler = (err, res) => {
   } else { // res.ok
     console.log('Response from CCI server:\n' + JSON.stringify(res.body, null, 4));
     const prefixes = config.artifacts.map(item => {
-      return { name: '$CIRCLE_ARTIFACTS/' + item, found: false };
+      return { name: item, found: false };
     });
     const urls = [];
     res.body.forEach(item => {
+      // strip first two segments of the path (that might start with leading /)
+      let mpath = item.path[0] === '/' ? item.path.substr(1) : item.path;
+      mpath = mpath.split('/').slice(2).join('/');
       prefixes.forEach(prefix => {
-        if (item.pretty_path.startsWith(prefix.name)) {
+        if (mpath.startsWith(prefix.name)) {
           urls.push(item.url);
           prefix.found = true;
         }
