@@ -113,7 +113,7 @@ const cciDownload = () => {
   let dirname;
   try {
     let i = 1;
-    while (true) {
+    while (true) {  // eslint-disable-line no-constant-condition
       dirname = basename + (i > 1 ? '.' + i : '');
       fs.statSync(path.join(config.directory, dirname));
       i++;
@@ -199,13 +199,17 @@ const cciBuildInfoHandler = (err, res) => {
     !options.install && console.log('Response from CCI server:\n' + JSON.stringify(res.body, null, 4));
     config._last = res.body[0].build_num;
     !options.install && console.info('Last successful ' + config._name + ' build number: ' + config._last + '.');
-    if (config.last === config._last) {
+    if (!options.install && (config.last === config._last)) {
       console.info('Build ' + config._last + ' already installed.');
       console.info('CCI task successfully finished.');
       EXIT_CODE = 0;
       scheduleNext();
     } else {
-      console.info('Build ' + config._last + ' is not installed yet.');
+      if (options.install && (config.last === config._last)) {
+        console.info('Build ' + config._last + ' already installed, about to install it again...');
+      } else {
+        console.info('Build ' + config._last + ' is not installed yet.');
+      }
       const apiPath = ['/api/v1.1/project', config.hosting, config.organisation,
                       config.project, config._last, 'artifacts']. join('/');
       console.log('Getting info about build ' + config._last + ' artifacts.');

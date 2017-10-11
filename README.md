@@ -48,7 +48,7 @@ Unless you also pass specific CircleCI build number, the first thing cci-pingu d
 
 This number (or number passed explicitly on command line as the build number to install) is then compared with the number of the latest CircleCI build installed locally (and stored in config file under `last` key).
 
-If that build is already installed locally, nothing happens and either the tool terminates (when started with `--run-once` option, or when you passed the CircleCI build number to be installed explicitly), or (in continuous mode, which is the default operation mode) it waits `interval` seconds and tries again.
+If that build is already installed locally, it is either installed again (in case you used `--install` option), or the build is ignored. Then the tool either terminates (when started with `--run-once` or `--install` option), or (in continuous mode, which is the default operation mode) it waits `interval` seconds and tries again.
 
 When the tool finds out that the latest CircleCI build (or the build provided on command line explicitly) is not installed locally, it retrieves the information about given build, including the artifacts of the build, and then compiles a list of artifacts that needs to be downloaded by comparing the list of artifacts listed in configuration file. As mentioned above, the list from configuration file is actually list of artifact name *prefixes*, so when you have "test" in the `artifacts` array of the configuration file, and the build info indicates that there are two artifacts on CircleCI, "test-1.2.3.tgz" and "test-db-0.1.2.dump", then both the artifacts will match the prefix and will be added to the list of artifacts to be donwloaded.
 
