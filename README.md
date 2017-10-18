@@ -5,24 +5,14 @@ Periodically check for new builds (artifacts) on CircleCI and install them local
 ## Installation
 
 ```
-> git clone git@github.com:salsita/cci-pingu.git
-> npm install
-> npm run build-pkg
+$ npm i cci-pingu
 ```
 
-After this, you will find the tool built in `dist` directory and packaged up as `cci-pingu.tgz` file in the root directory of the project repository.
+Installing this module adds a runnable file into your `node_modules/.bin` directory. If installed globally (with the `-g` option), you can run `cci-pingu`, otherwise you can run `./node_modules/.bin/cci-pingu`.
 
-Then you fine-tune your own configuration and you are good to go:
+To use the tool, you need to provide configuration file to it. You can copy the [config template](https://github.com/salsita/cci-pingu/blob/master/config/default.json), edit it with actual values and you are good to go!
 
-```
-> cp config/default.json config/my.json
-> vi my.json
-> node dist/cci-pingu --config=config/my.json
-```
-
-## Configuration file
-
-To be able to start the tool, you'll need to provide its configuration file. You can put it anywhere and write it from scratch, or you can copy and edit the default template `default.json` that is in `config` directory. All config files from `config` directory (except for `default.json`) will be part of the compiled bundle.
+## Configuration file format
 
 Config file is a JSON file with configuration object. The keys there have the following meaning:
 
@@ -82,34 +72,67 @@ In continuous mode (the default operation mode) the tool waits `interval` second
 
 All logs go to `stdout`, feel free to redirect as needed.
 
+## Building from code
+
+```
+$ git clone git@github.com:salsita/cci-pingu.git
+$ cd cci-pingu
+$ npm i
+$ npm run build
+```
+
 ## `package.json` npm scripts
 
 ```
-> npm run build
+$ npm run build
 ```
-Generate version file, lint the ES6 source code, transpile the ES6 source code into `dist` directory (using babel with `.babelrc` as the configuration file) and verify the (transpiled) tests pass on the (transpiled) code.
+Generate version file, lint the ES6 source code, transpile the ES6 source code into `dist` directory, and verify the (transpiled) tests pass on the (transpiled) code.
+
+```
+$ npm run babel
+```
+Transpiles (using babel with `.babelrc` configuration file) the ES6 source code from `lib` directory and `cci-pingu.js` file into `dist` directory, that is referenced from binary `bin/cci-pingu`.
 
 ```
 > npm run gen-ver
 ```
-Generate `code/lib/version.js` file exporting the current version of the tool, as taken from `package.json` itself. Used as part of the `build` script.
+Generate `lib/version.js` file exporting the current version of the tool, as taken from `package.json` itself.
 
 ```
 > npm run lint
 ```
-Lint the (ES6) source code, uses `.eslintrc` as the configuration file. Used as part of the `build` script.
+Lint the (ES6) source code, using `.eslintrc.json` configuration file.
 
 ```
 > npm run test
 ```
-Verify the (transpiled) tests pass on the (traspiled) code. Used as part of the `build` script.
+Verify the (transpiled) tests pass on the (traspiled) code. The test runner is mocha.
 
 ```
 > npm start
 ```
 Start the tool in tool with `config/default.json` configuration file in debug mode. Note: the tool must be built first (so you need to run `npm run build` prior to `npm start`). Also, the `default.json` file needs to be updated with project-related information and CCI API token before starting the tool.
 
-```
-> npm run build-pkg
-```
-Build the tool as in `npm run build`, install run-time `node_modules` to `dist` directory, copy over the configuration files (except for `default.json`), remove unnecessary files (test specs) and package the `dist` directory as a tarball.
+## Licence
+
+The MIT License (MIT)
+
+Copyright (c) 2016, 2017 Salsita Software
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
