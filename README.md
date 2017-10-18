@@ -1,3 +1,9 @@
+[![Dependency Status](https://img.shields.io/david/salsita/cci-pingu.svg)](https://david-dm.org/salsita/cci-pingu)
+[![devDependency Status](https://img.shields.io/david/dev/salsita/cci-pingu.svg)](https://david-dm.org/salsita/cci-pingu?type=dev)
+![Downloads](https://img.shields.io/npm/dm/cci-pingu.svg?style=flat)
+![Licence](https://img.shields.io/npm/l/cci-pingu.svg?style=flat)
+[![Known Vulnerabilities](https://snyk.io/test/github/salsita/cci-pingu/badge.svg)](https://snyk.io/test/github/salsita/cci-pingu)
+
 # cci-pingu
 
 Periodically check for new builds (artifacts) on CircleCI and install them locally in turn.
