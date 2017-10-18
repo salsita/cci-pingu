@@ -1,11 +1,12 @@
 {
-    "token": "TODO: your CCI API token",
-    "organisation": "TODO: your organisation",
-    "project": "TODO: your project",
-    "branch": "TODO: your branch",
-    "artifacts": [
-        "TODO: your artifact 1",
-        "TODO: your artifact 2"
-    ],
-    "script": "TODO: your installation script"
+  "token": "<CCI API token>",
+  "hosting": "<repo hosting (github / bitbucket)>",
+  "organisation": "<organisation name>",
+  "project": "<project name>",
+  "branch": "<branch to monitor>",
+  "artifacts": [
+    "<artifact to download>",
+    "<artifact to download>"
+  ],
+  "script": "<path to executable script capable of installing artifact(s)>"
 }
