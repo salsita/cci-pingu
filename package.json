@@ -1,7 +1,7 @@
 {
   "name": "cci-pingu",
-  "version": "1.3.2",
-  "description": "Periodically check for new builds (artifacts) on CircleCI and install them in turn.",
+  "version": "2.0.0",
+  "description": "Periodically check for new builds (artifacts) on CircleCI and install them in turn",
   "license": "MIT",
   "author": "Roman Kaspar <roman@salsitasoft.com>",
   "repository": {
@@ -12,24 +12,30 @@
     "node": ">=4.2.1"
   },
   "scripts": {
-    "build": "npm run gen-ver && npm run lint && rm -rf dist && mkdir dist && ./node_modules/.bin/babel code --out-dir dist --source-maps inline && npm run test",
-    "gen-ver": "printf \"// generated code, please see package.json\nexport default '%s';\n\" ${npm_package_version} > code/lib/version.js",
-    "lint": "./node_modules/.bin/eslint code",
-    "test": "./node_modules/.bin/mocha --colors --recursive --reporter list dist/**/*.spec.js",
-    "start": "node dist/cci-pingu.js --config=config/default.json --debug",
-    "build-pkg": "npm run build && cp package.json dist && cp -r config dist && rm dist/config/default.json && cd dist && npm install --production && rm package.json && find . -name \"*.spec.js\" -exec rm \\{\\} \\; && COPYFILE_DISABLE=1 tar cfz ../cci-pingu.tgz *"
+    "babel": "babel lib --out-dir dist/lib --source-maps inline && babel cci-pingu.js --out-dir dist --source-maps inline",
+    "build": "npm run gen-ver && npm run lint && rm -rf dist && mkdir dist && npm run babel && npm run test",
+    "gen-ver": "printf \"// generated code, please see package.json\nexport default '%s';\n\" ${npm_package_version} > lib/version.js",
+    "lint": "eslint lib cci-pingu.js",
+    "test": "mocha --colors --recursive --reporter list dist/**/*.spec.js",
+    "start": "./bin/cci-pingu --config=config/default.json --debug"
+  },
+  "bin": {
+    "cci-pingu": "bin/cci-pingu"
   },
   "devDependencies": {
-    "babel-cli": "^6.2.0",
-    "babel-eslint": "^4.1.6",
-    "babel-preset-es2015": "^6.1.18",
-    "babel-preset-stage-0": "^6.3.13",
-    "eslint": "^1.10.2",
-    "eslint-plugin-import": "^0.11.0",
-    "mocha": "^2.3.4"
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^4.0.1"
   },
   "dependencies": {
     "argv": "0.0.2",
-    "superagent": "^1.5.0"
+    "superagent": "^3.6.3"
   }
 }
