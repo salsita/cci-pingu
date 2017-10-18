@@ -81,7 +81,7 @@ $ npm i
 $ npm run build
 ```
 
-## `package.json` npm scripts
+### `package.json` npm scripts
 
 ```
 $ npm run build
@@ -94,22 +94,22 @@ $ npm run babel
 Transpiles (using babel with `.babelrc` configuration file) the ES6 source code from `lib` directory and `cci-pingu.js` file into `dist` directory, that is referenced from binary `bin/cci-pingu`.
 
 ```
-> npm run gen-ver
+$ npm run gen-ver
 ```
 Generate `lib/version.js` file exporting the current version of the tool, as taken from `package.json` itself.
 
 ```
-> npm run lint
+$ npm run lint
 ```
 Lint the (ES6) source code, using `.eslintrc.json` configuration file.
 
 ```
-> npm run test
+$ npm test
 ```
 Verify the (transpiled) tests pass on the (traspiled) code. The test runner is mocha.
 
 ```
-> npm start
+$ npm start
 ```
 Start the tool in tool with `config/default.json` configuration file in debug mode. Note: the tool must be built first (so you need to run `npm run build` prior to `npm start`). Also, the `default.json` file needs to be updated with project-related information and CCI API token before starting the tool.
 
