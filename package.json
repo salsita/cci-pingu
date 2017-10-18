@@ -22,6 +22,14 @@
   "bin": {
     "cci-pingu": "bin/cci-pingu"
   },
+  "keywords": [
+    "automated",
+    "continuous",
+    "deployment",
+    "circleci.com",
+    "artifact",
+    "artifacts"
+  ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
