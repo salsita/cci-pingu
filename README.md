@@ -52,7 +52,10 @@ Once we know the list of the artifacts, the tool will create a new directory und
 
 After the directory is created, cci-pingu will download all the artifacts from the compiled list.
 
-When all of the artifacts are downloaded into that directory, the tool starts executable (typically installation bash script) specified in the configuration file as `script`. This script must take one command line argument, and that is the name of the directory into which the artifacts from CircleCI were downloaded. It is expected that the script knows how to use the artifacts and what exactly to do with them to successfuly install them locally.
+When all of the artifacts are downloaded into that directory, the tool starts executable (typically installation bash script) specified in the configuration file as `script`. This script must take two command line arguments, which are:
+* the name of the directory into which the artifacts from CircleCI were downloaded, and
+* the build number currently processed.
+It is expected that the script knows how to use the artifacts and what exactly to do with them to successfuly install them locally.
 
 It might be a good idea to delete the directories from previous installations, and leave the last *N* artifact directories there, to keep the disk space occupied with these directories limited.
 
