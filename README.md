@@ -74,6 +74,7 @@ In continuous mode (the default operation mode) the tool waits `interval` second
 | `--config` | `-c` | * | string | Path to configuration JSON file. |
 | `--debug` | `-d` | | boolean | Log verbosely. |
 | `--silent` | `-s` | | boolean | Log errors only. |
+| `--no-time` | | | boolean | Do NOT prefix output lines with timestamp and log-level. |
 | `--run-once` | `-1` | | boolean | Do NOT run as a monitoring daemon. |
 | `--help` | `-h` | | boolean | Print help and exit. |
 | `--version` | `-v` | | boolean | Print version and exit. |

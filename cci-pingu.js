@@ -5,8 +5,8 @@ import task from './lib/task';
 import version from './lib/version';
 
 const main = () => {
-  logger.install();
   const options = cmdline.options;
+  logger.install(null, null, !options['no-time']);
   if (options.silent) { logger.level('error'); }
   if (options.debug)  { logger.level('log'); }
 
