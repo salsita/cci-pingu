@@ -44,7 +44,7 @@ the "branch" field must be provided.
 
 When the tool is started, it reads the configuration file specified as command-line argument. The structure of the configuration file is described above.
 
-Unless you also pass specific CircleCI build number, the first thing cci-pingu does is figuring out what is the latest successful CircleCI build for given project on specified branch.
+Unless you also pass specific CircleCI build number, the first thing cci-pingu does is figuring out what is the latest successful CircleCI build for given project on specified branch, or any branch in case ignore_branch is set to `true`.
 
 This number (or number passed explicitly on command line as the build number to install) is then compared with the number of the latest CircleCI build installed locally (and stored in config file under `last` key).
 
