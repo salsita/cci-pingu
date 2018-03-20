@@ -1,0 +1,9 @@
+{
+  "token": true,
+  "hosting": true,
+  "organisation": true,
+  "project": true,
+  "artifacts": true,
+  "script": true,
+  "ignore_branch": false
+}

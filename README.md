@@ -28,13 +28,17 @@ Config file is a JSON file with configuration object. The keys there have the fo
 | hosting | * | string | | "github" or "bitbucket"; where you repo is hosted. |
 | organisation | * | string | | The name of your github / bitbucket organisation (or user) under which the monitored project lives on CircleCI. |
 | project | * | string | | The name of the project you'd like to watch and install locally. |
-| branch | * | string| | The project repository branch to monitor. |
+| branch (1) | | string| | The project repository branch to monitor. |
+| ignore_branch (1) | | boolean | `false` | If set to `true`, process builds from all branches. |
 | artifacts | * | array of strings | | List of artifact names that will be downloaded for successful build. Actually, it is list of artifact name *substrings* so that you can have "test" string in the `artifacts` array and it would match "test-1.2.3.tgz" artifact on CircleCI. |
 | script | * | string | | Filename of executable (typically script) that is able to install the artifacts locally. |
-| interval | | integer | 60 | When running in continuous mode, this number specifies the number of seconds between two consecutive checks on CircleCI. |
-| directory | | string | /tmp | The name of the directory in which build-related sub-directories storing the artifacts will be created. Make sure the directory exists and you have write permissions there. |
-| last | | integer | 0 | The number of the latest build successfully installed locally. This field is auto-updated by the tool after each successful installation. |
-| timeout | | integer | 45 | How long to wait for downloading an artifact (per-artifact-download setting). If downloading takes longer than provided number of seconds, it is considered failed. |
+| interval | | integer | `60` | When running in continuous mode, this number specifies the number of seconds between two consecutive checks on CircleCI. |
+| directory | | string | `/tmp` | The name of the directory in which build-related sub-directories storing the artifacts will be created. Make sure the directory exists and you have write permissions there. |
+| last | | integer | `0` | The number of the latest build successfully installed locally. This field is auto-updated by the tool after each successful installation. |
+| timeout | | integer | `45` | How long to wait for downloading an artifact (per-artifact-download setting). If downloading takes longer than provided number of seconds, it is considered failed. |
+
+(1) One of "branch" and "ignore_branch" fields must be provided. If "ignore_branch" is set to `false` (default),
+the "branch" field must be provided.
 
 ## How it works
 
