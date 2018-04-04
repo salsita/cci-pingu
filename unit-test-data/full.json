@@ -5,6 +5,7 @@
   "project": "project",
   "branch": "branch",
   "artifacts": "artifacts",
+  "order_by": "order_by",
   "script": "script",
   "interval": "interval",
   "directory": "directory",
