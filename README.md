@@ -30,6 +30,7 @@ Config file is a JSON file with configuration object. The keys there have the fo
 | project | * | string | | The name of the project you'd like to watch and install locally. |
 | branch (1) | | string| | The project repository branch to monitor. |
 | ignore_branch (1) | | boolean | `false` | If set to `true`, process builds from all branches. |
+| workflows_job_name | | string | | When specified, the tool only looks for successful builds created as part of worflows by job with specified name. |
 | artifacts | * | array of strings | | List of artifact names that will be downloaded for successful build. Actually, it is list of artifact name *substrings* so that you can have "test" string in the `artifacts` array and it would match "test-1.2.3.tgz" artifact on CircleCI. |
 | order_by | | string | `build_num` | When looking for the latest build, use this field in [response](https://circleci.com/docs/api/v1-reference/#recent-builds-project) to define the order (`stop_time` could be an interesting option for someone, too). |
 | script | * | string | | Filename of executable (typically script) that is able to install the artifacts locally. |
@@ -45,7 +46,7 @@ the "branch" field must be provided.
 
 When the tool is started, it reads the configuration file specified as command-line argument. The structure of the configuration file is described above.
 
-Unless you also pass specific CircleCI build number, the first thing cci-pingu does is figuring out what is the latest successful CircleCI build for given project on specified branch, or any branch in case ignore_branch is set to `true`.  The order in which the latest successful build is looked up is defined with the `order_by` configuration option, and it is looked up in 100 lastest builds by `build_num`.
+Unless you also pass specific CircleCI build number, the first thing cci-pingu does is figuring out what is the latest successful CircleCI build for given project on specified branch, or any branch in case ignore_branch is set to `true`.  The order in which the latest successful build is looked up is defined with the `order_by` configuration option, and it is looked up in 100 lastest builds by `build_num`. In case `workflows_job_name` configuration option is provided, the successful builds are filtered on this specified workflows job name, other builds are not even considered.
 
 This number (or number passed explicitly on command line as the build number to install) is then compared with the number of the latest CircleCI build installed locally (and stored in config file under `last` key).
 
