@@ -24,6 +24,7 @@ Config file is a JSON file with configuration object. The keys there have the fo
 
 | Name | Mandatory | Type | Default | Meaning |
 | ---- |:---------:|:----:|:-------:| ------- |
+| cci_url | | string | `https://circleci.com` | Base-URL of CircleCI. Use with self-hosted CircleCI installations. |
 | token | * | string | | Your CircleCI API token that will be used when talking to CircleCI. Make sure you can access your project with this token. |
 | hosting | * | string | | "github" or "bitbucket"; where you repo is hosted. |
 | organisation | * | string | | The name of your github / bitbucket organisation (or user) under which the monitored project lives on CircleCI. |
@@ -133,7 +134,7 @@ Start the tool in tool with `config/default.json` configuration file in debug mo
 
 The MIT License (MIT)
 
-Copyright (c) 2016, 2017 Salsita Software
+Copyright (c) 2016--2018 Salsita Software
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
