@@ -10,3 +10,4 @@ unit-test-data
 .babelrc
 .eslintrc.json
 .*.swp
+.circleci
