@@ -50,9 +50,11 @@
     "superagent": "5.0.5"
   },
   "renovate": {
-    "extends": [
-      "config:base"
-    ],
-    "bumpVersion": "patch"
+    "extends": ["config:base"],
+    "bumpVersion": "patch",
+    "automerge": true,
+    "major": {
+      "automerge": false
+    }
   }
 }
