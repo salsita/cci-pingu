@@ -1,6 +1,6 @@
 {
   "name": "cci-pingu",
-  "version": "2.7.18",
+  "version": "2.7.19",
   "description": "Periodically check for new builds (artifacts) on CircleCI and install them in turn",
   "license": "MIT",
   "author": "Roman Kaspar <roman@salsitasoft.com>",
@@ -47,7 +47,7 @@
     "argv": "0.0.2",
     "lodash.filter": "4.6.0",
     "lodash.orderby": "4.6.0",
-    "superagent": "5.0.6"
+    "superagent": "5.0.7"
   },
   "renovate": {
     "extends": ["config:base"],
