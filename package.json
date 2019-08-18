@@ -1,6 +1,6 @@
 {
   "name": "cci-pingu",
-  "version": "2.8.2",
+  "version": "2.8.3",
   "description": "Periodically check for new builds (artifacts) on CircleCI and install them in turn",
   "license": "MIT",
   "author": "Roman Kaspar <roman@salsitasoft.com>",
@@ -35,7 +35,7 @@
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-0": "6.24.1",
-    "eslint": "6.1.0",
+    "eslint": "6.2.0",
     "eslint-config-standard": "13.0.1",
     "eslint-plugin-import": "2.18.0",
     "eslint-plugin-node": "9.1.0",
