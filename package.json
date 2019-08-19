@@ -1,6 +1,6 @@
 {
   "name": "cci-pingu",
-  "version": "2.8.3",
+  "version": "2.8.4",
   "description": "Periodically check for new builds (artifacts) on CircleCI and install them in turn",
   "license": "MIT",
   "author": "Roman Kaspar <roman@salsitasoft.com>",
@@ -40,7 +40,7 @@
     "eslint-plugin-import": "2.18.0",
     "eslint-plugin-node": "9.1.0",
     "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-standard": "4.0.0",
+    "eslint-plugin-standard": "4.0.1",
     "mocha": "6.2.0"
   },
   "dependencies": {
