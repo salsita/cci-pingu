@@ -1,4 +1,2 @@
 #!/usr/bin/env node
-
-var main = require('../dist/cci-pingu');
-main();
+require('../dist/cci-pingu')();
