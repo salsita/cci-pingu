@@ -16,11 +16,12 @@
   },
   "scripts": {
     "babel": "babel lib --out-dir dist/lib --source-maps inline && babel cci-pingu.js --out-dir dist --source-maps inline",
-    "build": "npm run gen-ver && npm run lint && rm -rf dist && mkdir dist && npm run babel && npm run test",
+    "build": "npm run gen-ver && npm run lint && rimraf dist && npm run babel && npm run test",
     "gen-ver": "printf \"// generated code, please see package.json\nexport default '%s';\n\" ${npm_package_version} > lib/version.js",
     "lint": "eslint lib cci-pingu.js",
     "test": "mocha --colors --recursive --reporter list dist/**/*.spec.js",
-    "start": "./bin/cci-pingu --config=config/default.json --debug"
+    "start": "./bin/cci-pingu --config=config/default.json --debug",
+    "prepare": "npm run build"
   },
   "bin": {
     "cci-pingu": "bin/cci-pingu"
@@ -44,7 +45,8 @@
     "eslint-plugin-node": "11.0.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.1",
-    "mocha": "7.1.1"
+    "mocha": "7.1.1",
+    "rimraf": "3.0.2"
   },
   "dependencies": {
     "argv": "^0.0.2",
