@@ -36,20 +36,20 @@
     "artifacts"
   ],
   "devDependencies": {
-    "@babel/cli": "7.16.0",
-    "@babel/core": "7.16.0",
-    "@babel/preset-env": "7.16.0",
+    "@babel/cli": "7.25.9",
+    "@babel/core": "7.25.9",
+    "@babel/preset-env": "7.25.9",
     "eslint": "7.32.0",
     "eslint-config-standard": "16.0.3",
-    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-import": "2.31.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "5.1.1",
+    "eslint-plugin-promise": "5.2.0",
     "eslint-plugin-standard": "4.1.0",
     "mocha": "8.4.0",
     "rimraf": "3.0.2"
   },
   "dependencies": {
-    "argv": "^0.0.2",
+    "argv": "^0.0.3",
     "lodash.filter": "^4.6.0",
     "lodash.orderby": "^4.6.0",
     "request": "^2.88.2"
